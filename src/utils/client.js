@@ -1,4 +1,3 @@
-require('dotenv').config();
 const Twit = require('twit');
 const token = require('../../config.json');
 

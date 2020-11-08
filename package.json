@@ -1,6 +1,6 @@
 {
    "name": "kowalski-lite",
-   "version": "1.0.0",
+   "version": "1.0.1",
    "description": "node cli tweet analyzer",
    "main": "./src/index.js",
    "preferGlobal": true,
@@ -14,8 +14,7 @@
       "twitter"
    ],
    "scripts": {
-      "prepare": "cp ./config.json.example ./config.json",
-      "start": "node -r esm ./src/index.js",
+      "start": "node ./src/index.js",
       "test": "echo \"Error: no test specified\" && exit 1"
    },
    "bin": {
@@ -24,6 +23,7 @@
    "author": "",
    "license": "ISC",
    "dependencies": {
+      "dotenv": "^8.2.0",
       "inquirer": "^7.3.3",
       "lodash": "^4.17.20",
       "minimist": "^1.2.5",

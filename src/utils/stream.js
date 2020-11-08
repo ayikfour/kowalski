@@ -1,7 +1,5 @@
 // const client = require('./client')();
 const ora = require('ora');
-
-// require('dotenv').config();
 const auth = require('./auth');
 const client = require('./client');
 

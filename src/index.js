@@ -1,4 +1,3 @@
-require('dotenv').config();
 const minimist = require('minimist');
 const kowalski = require('./kowalski');
 const error = require('./utils/error');
