@@ -1,0 +1,36 @@
+{
+   "name": "kowalski",
+   "version": "1.0.0",
+   "description": "node cli tweet analyzer",
+   "main": "./src/index.js",
+   "preferGlobal": true,
+   "engines": {
+      "node": ">=8"
+   },
+   "keywords": [
+      "kowalski",
+      "text mining",
+      "summarizer",
+      "twitter"
+   ],
+   "scripts": {
+      "prepare": "cp ./.env.example ./.env",
+      "start": "node -r esm ./src/index.js",
+      "test": "echo \"Error: no test specified\" && exit 1"
+   },
+   "bin": {
+      "kowalski": "bin/kowalski-lite"
+   },
+   "author": "",
+   "license": "ISC",
+   "dependencies": {
+      "dotenv": "^8.2.0",
+      "envfile": "^6.14.0",
+      "inquirer": "^7.3.3",
+      "lodash": "^4.17.20",
+      "minimist": "^1.2.5",
+      "ora": "^5.1.0",
+      "sastrawijs": "^1.0.3",
+      "twit": "^2.2.11"
+   }
+}
