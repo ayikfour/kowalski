@@ -14,7 +14,7 @@ const username = async ({ username, count }) => {
       // clean the tweets by running clean modules
       tweets = clean.now(tweets);
       // get tweets summary by counting document frequencies
-      const summary = summarize.now(tweets);
+      let summary = summarize.now(tweets);
       summary = summary.map((item) => {
          return { ...item, username: username, date: new Date() };
       });
@@ -22,7 +22,7 @@ const username = async ({ username, count }) => {
       console.log(`Last ${count} tweet summary from: ${username}`);
       console.table(summary);
    } catch (error) {
-      console.log(error);
+      console.log(error.message);
    }
 };
 
@@ -34,7 +34,7 @@ const timeline = async ({ username, count }) => {
       // clean the tweets by running clean modules
       tweets = clean.now(tweets);
       // get tweets summary by counting document frequencies
-      const summary = summarize.now(tweets);
+      let summary = summarize.now(tweets);
       summary = summary.map((item) => {
          return { ...item, date: new Date() };
       });
@@ -42,7 +42,7 @@ const timeline = async ({ username, count }) => {
       console.log(`Last ${count} tweet summary from: timeline`);
       console.table(summary);
    } catch (error) {
-      console.log(error);
+      console.log(error.message);
    }
 };
 
@@ -63,7 +63,7 @@ const search = async ({ search, count }) => {
       console.log(`Most paired words with ${keyword} on twitter search`);
       console.table(summary);
    } catch (error) {
-      console.log(error);
+      console.log(error.message);
    }
 };
 
@@ -87,6 +87,7 @@ kowalski [command] <options>
 `;
 
    console.log(menu);
+   process.exit();
 };
 
 module.exports = { username, search, timeline, version, help };

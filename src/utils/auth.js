@@ -1,4 +1,5 @@
 require('dotenv').config();
+const token = require('../../config.json');
 const fs = require('fs');
 const path = require('path');
 const envfile = require('envfile');
@@ -6,24 +7,12 @@ var inquirer = require('inquirer');
 const client = require('./client');
 var sourcePath = '.env';
 
-const readline = require('readline').createInterface({
-   input: process.stdin,
-   output: process.stdout,
-});
-
-const token = {
-   TWITTER_CONSUMER_KEY: process.env.TWITTER_CONSUMER_KEY,
-   TWITTER_CONSUMER_SECRET: process.env.TWITTER_CONSUMER_SECRET,
-   TWITTER_ACCESS_TOKEN: process.env.TWITTER_ACCESS_TOKEN,
-   TWITTER_ACCESS_TOKEN_SECRET: process.env.TWITTER_ACCESS_TOKEN_SECRET,
-};
-
 const isAuthenticated = () => {
    if (
-      process.env.TWITTER_CONSUMER_KEY &&
-      process.env.TWITTER_CONSUMER_SECRET &&
-      process.env.TWITTER_ACCESS_TOKEN &&
-      process.env.TWITTER_ACCESS_TOKEN_SECRET
+      token.consumer_key &&
+      token.consumer_secret &&
+      token.access_token &&
+      token.access_token_secret
    ) {
       console.log('everyhtings is fine!');
       console.log("if you want to configure token, run: 'kowalski reconfig'");
@@ -91,9 +80,11 @@ const input = async () => {
 };
 
 function write(token) {
+   // envfile.stringify(token)
+   // path.join(__dirname, '../../.env')
    try {
-      const filePath = path.join(__dirname, '../../.env');
-      fs.writeFileSync(filePath, envfile.stringify(token), {
+      const filePath = path.join(__dirname, '../../config.json');
+      fs.writeFileSync(filePath, JSON.stringify(token), {
          flags: 'W+',
       });
    } catch (error) {
