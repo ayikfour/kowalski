@@ -1,7 +1,6 @@
 const token = require('../../config.json');
 const fs = require('fs');
 const path = require('path');
-const envfile = require('envfile');
 var inquirer = require('inquirer');
 const client = require('./client');
 var sourcePath = '.env';
