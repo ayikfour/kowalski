@@ -39,10 +39,6 @@ module.exports = () => {
       cmd = 'timeline';
    }
 
-   if (args.auth || args.a) {
-      cmd = 'auth';
-   }
-
    switch (cmd) {
       case 'user':
          kowalski.username(args);

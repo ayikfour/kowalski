@@ -1,7 +1,8 @@
 {
    "name": "kowalski-lite",
-   "version": "1.0.1",
-   "description": "node cli tweet analyzer",
+   "version": "1.0.5",
+   "description": "node cli tweet analyzer based on kowalski-lite python",
+   "repository": "https://github.com/ayikfour/kowalski",
    "main": "./src/index.js",
    "preferGlobal": true,
    "engines": {
@@ -14,14 +15,20 @@
       "twitter"
    ],
    "scripts": {
-      "prepack": "cp ./config.json.example ./config.json",
+      "preinstall": "cp ./config.json.example ./config.json",
       "start": "node ./src/index.js",
       "test": "echo \"Error: no test specified\" && exit 1"
    },
    "bin": {
       "kowalski": "bin/kowalski-lite"
    },
-   "author": "",
+   "author": "ayikfour",
+   "contributors": [
+      {
+         "name": "bitxt",
+         "email": "kontak.farhan@gmail.com"
+      }
+   ],
    "license": "ISC",
    "dependencies": {
       "inquirer": "^7.3.3",
