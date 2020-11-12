@@ -31,11 +31,18 @@
    ],
    "license": "ISC",
    "dependencies": {
+      "axios": "^0.21.0",
+      "colors": "^1.4.0",
+      "csv-parser": "^2.3.3",
+      "csv-writer": "^1.6.0",
       "inquirer": "^7.3.3",
       "lodash": "^4.17.20",
+      "login-with-twitter": "^1.2.3",
       "minimist": "^1.2.5",
+      "oauth": "^0.9.15",
       "ora": "^5.1.0",
       "sastrawijs": "^1.0.3",
+      "step": "^1.0.0",
       "twit": "^2.2.11"
    }
 }

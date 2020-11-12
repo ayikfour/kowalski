@@ -3,6 +3,9 @@ const ora = require('ora');
 const auth = require('./auth');
 const client = require('./client');
 
+var Step = require('step');
+var colors = require('colors');
+
 /**
  *
  * @param {*} username
@@ -27,9 +30,7 @@ const tweetsFrom = async (username = '', count) => {
 
       return tweets;
    } catch (error) {
-      spinner.fail('kowalski found some problem ヽ(`⌒´メ)ノ');
-      console.log(error.message);
-      process.exit(9);
+      ErrorHandler(error, spinner);
    }
 };
 
@@ -55,9 +56,7 @@ const timeline = async (count) => {
 
       return tweets;
    } catch (error) {
-      spinner.fail('kowalski found some problem ヽ(`⌒´メ)ノ	');
-      console.log(error.message);
-      throw error;
+      ErrorHandler(error, spinner);
    }
 };
 
@@ -81,9 +80,7 @@ const search = async (keywords = '', count = 100) => {
 
       return tweets;
    } catch (error) {
-      spinner.fail('kowalski found some problem ヽ(`⌒´メ)ノ	');
-      console.log(error.message);
-      throw error;
+      ErrorHandler(error, spinner);
    }
 };
 
@@ -92,8 +89,22 @@ const app = async () => {
       const { data } = await client.get('application/rate_limit_status');
       return data;
    } catch (error) {
-      console.log(error);
+      ErrorHandler(error, spinner);
    }
+};
+
+/**
+ *
+ * @param {*} error
+ * @param {*} spinner
+ */
+const ErrorHandler = (error, spinner) => {
+   spinner.fail('kowalski found some problem ヽ(`⌒´メ)ノ	');
+   console.log('✘', error.message);
+   console.log(
+      '✘ try to reconfigure your authentication using ' + 'kowalski oauth'.bold
+   );
+   process.exit(9);
 };
 
 module.exports = {

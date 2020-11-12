@@ -1,28 +1,25 @@
-const auth = require('../src/utils/auth');
-const client = require('../src/utils/client');
-const cleaner = require('../src/textmining/cleaner');
+const auth = require('../utils/auth');
+const client = require('../utils/client');
+const cleaner = require('./cleaner');
+const IO = require('../utils/IO');
+const path = require('path');
 
-const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+async function collect(url = '', classify = '') {
+   const id = url.split('/').pop();
+   const T = client();
 
-const csvWriter = createCsvWriter({
-   path: 'out.csv',
-   append: true,
-   header: [
+   const header = [
       { id: 'username', title: 'username' },
       { id: 'tweet', title: 'tweet' },
       { id: 'id', title: 'id' },
       { id: 'date', title: 'date' },
-   ],
-});
-async function collect(url = '', classify = '') {
-   const id = url.split('/').pop();
-   const T = client();
+   ];
+
    try {
       const { data } = await T.get('statuses/show', {
          id: id,
          tweet_mode: 'extended',
       });
-      console.log(data);
 
       const tweet = [
          {
@@ -32,14 +29,13 @@ async function collect(url = '', classify = '') {
             date: Date.now(),
          },
       ];
-      await csvWriter.writeRecords(tweet);
+
+      const _path = path.join(__dirname, `../classification/${classify}.csv`);
+      await IO.writeCSV(_path, header, tweet);
       console.log('The CSV file was written successfully');
    } catch (error) {
       console.log(error);
    }
 }
 
-collect(
-   'https://twitter.com/akunusam/status/1326942545415266304?s=20',
-   'bingung'
-);
+module.exports = { collect };

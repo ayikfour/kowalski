@@ -2,6 +2,8 @@ const minimist = require('minimist');
 const kowalski = require('./kowalski');
 const error = require('./utils/error');
 const auth = require('./utils/auth');
+const oa = require('./utils/oauth');
+const trainer = require('./textmining/trainer');
 
 var args = minimist(process.argv.slice(2), {
    alias: {
@@ -16,8 +18,13 @@ var args = minimist(process.argv.slice(2), {
    },
 });
 
+// let cmd =
+// args._[0] || 'angry' || 'sad' || 'confused' || 'happy' || 'neutral';
+
+const classify = ['angry', 'sad', 'confused', 'happy', 'neutral'];
+
 module.exports = () => {
-   let cmd = args._[0] || 'help';
+   let cmd = classify.includes(args._[0]) ? 'train' : 'help';
 
    if (args.version || args.v) {
       cmd = 'version';
@@ -60,12 +67,14 @@ module.exports = () => {
          kowalski.version(args);
          break;
 
-      case 'auth':
-         auth.now();
+      case 'train':
+         const url = args._[1];
+         const classify = args._[0];
+         trainer.collect(url, classify);
          break;
 
-      case 'reconfig':
-         auth.reconfig();
+      case 'oauth':
+         oa.getRequestToken();
          break;
 
       default:
@@ -73,3 +82,10 @@ module.exports = () => {
          break;
    }
 };
+// case 'auth':
+//    auth.now();
+//    break;
+
+// case 'reconfig':
+//    auth.reconfig();
+//    break;

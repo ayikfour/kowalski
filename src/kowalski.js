@@ -6,6 +6,7 @@ const clean = require('./textmining/cleaner');
 const summarize = require('./textmining/summarizer');
 
 const username = async ({ username, count }) => {
+   const spinner = ora('Kowalski ready (￢‿￢ )');
    try {
       let tweets = [];
       //  get tweets from Twtitter API's
@@ -19,14 +20,15 @@ const username = async ({ username, count }) => {
          return { ...item, username: username, date: new Date() };
       });
       // print the result to console
-      console.log(`Last ${count} tweet summary from: ${username}`);
+      spinner.succeed(`Last ${count} tweet summary from: ${username}`);
       console.table(summary);
    } catch (error) {
-      console.log(error.message);
+      ErrorHandler(error, spinner);
    }
 };
 
 const timeline = async ({ username, count }) => {
+   const spinner = ora('Kowalski ready (￢‿￢ )');
    try {
       let tweets = [];
       //  get tweets from Twtitter API's
@@ -42,11 +44,12 @@ const timeline = async ({ username, count }) => {
       console.log(`Last ${count} tweet summary from: timeline`);
       console.table(summary);
    } catch (error) {
-      console.log(error.message);
+      ErrorHandler(error, spinner);
    }
 };
 
 const search = async ({ search, count }) => {
+   const spinner = ora('Kowalski ready (￢‿￢ )');
    try {
       let keyword = search;
       let tweets = [];
@@ -63,7 +66,7 @@ const search = async ({ search, count }) => {
       console.log(`Most paired words with ${keyword} on twitter search`);
       console.table(summary);
    } catch (error) {
-      console.log(error.message);
+      ErrorHandler(error, spinner);
    }
 };
 
@@ -88,6 +91,15 @@ kowalski [command] <options>
 
    console.log(menu);
    process.exit();
+};
+
+const ErrorHandler = (error, spinner) => {
+   spinner.fail('kowalski found some problem ヽ(`⌒´メ)ノ	');
+   console.log('✘', error.message);
+   console.log(
+      '✘ try to reconfigure your authentication using ' + 'kowalski oauth'.bold
+   );
+   process.exit(9);
 };
 
 module.exports = { username, search, timeline, version, help };

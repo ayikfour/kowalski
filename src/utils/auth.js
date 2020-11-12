@@ -2,7 +2,6 @@ const token = require('../../config.json');
 const fs = require('fs');
 const path = require('path');
 var inquirer = require('inquirer');
-const client = require('./client');
 var sourcePath = '.env';
 
 const isAuthenticated = () => {

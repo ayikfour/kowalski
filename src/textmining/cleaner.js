@@ -14,6 +14,7 @@ function caseFold(document = '') {
 function clean(document = '') {
    return document
       .replace(/http\S+/g, '') //remove url
+      .replace(/[\n\r]/g, '') //remove breakspace
       .replace(/\d+/g, '') //remove number
       .replace(
          /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g,
@@ -23,7 +24,7 @@ function clean(document = '') {
          /(?<=^|(?<=[^a-zA-Z0-9-_\.]))@([A-Za-z]+[A-Za-z0-9-_]+\S\s)/g,
          ''
       ) // usernames
-      .replace(/[^\w\s]/g, '') //remove period
+      .replace(/[^\w\s]/g, ' ') //remove period
       .replace(/[,'":*?%<>{|}&\/\\$()\n\r]/g, '') //remove symbols
       .replace(/\B\s\B/g, ''); //remove whitespace
 }
@@ -92,4 +93,13 @@ function now(tweets = [], keyword = '') {
    });
 }
 
-module.exports = { now, stem, filter, clean, tokenize, caseFold };
+function text(tweet = '', keyword = '') {
+   let caseFolded = caseFold(tweet);
+   let cleaned = clean(caseFolded);
+   let tokened = tokenize(cleaned);
+   let filtered = filter(tokened, keyword);
+   let stemmed = stem(filtered);
+   return stemmed;
+}
+
+module.exports = { now, text, stem, filter, clean, tokenize, caseFold };

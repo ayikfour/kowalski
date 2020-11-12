@@ -262,6 +262,8 @@ ikut
 ingat
 ingat-ingat
 ingin
+pingin
+pengen
 inginkah
 inginkan
 ini
@@ -361,6 +363,8 @@ lebih
 lewat
 lima
 luar
+lihat
+liat
 macam
 maka
 makanya
@@ -387,6 +391,7 @@ melalui
 melihat
 melihatnya
 memang
+memakai
 memastikan
 memberi
 memberikan
@@ -487,6 +492,8 @@ pada
 padahal
 padanya
 pak
+pakai
+pake
 paling
 panjang
 pantas
@@ -1109,6 +1116,7 @@ then
 there
 therefore
 these
+thank
 they
 thing
 things
@@ -1712,6 +1720,7 @@ sama
 sama-sama
 sambil
 sampai
+sampe
 sampai-sampai
 sampaikan
 sana
