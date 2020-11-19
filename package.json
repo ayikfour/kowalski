@@ -1,6 +1,6 @@
 {
    "name": "kowalski-lite",
-   "version": "1.0.5",
+   "version": "1.0.8",
    "description": "node cli tweet analyzer based on kowalski-lite python",
    "repository": "https://github.com/ayikfour/kowalski",
    "main": "./src/index.js",
