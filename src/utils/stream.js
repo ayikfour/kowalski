@@ -34,6 +34,36 @@ const tweetsFrom = async (username = '', count) => {
    }
 };
 
+const tweet = async (url = '', classify) => {
+   const id = url.split('/').pop();
+   const spinner = ora({
+      text: `kowalski getting tweet from ${id} <(￣︶￣)>`,
+   }).start();
+   try {
+      const twit = client();
+      const { data } = await twit.get('statuses/show', {
+         id: id,
+         tweet_mode: 'extended',
+      });
+
+      const document = [
+         {
+            username: data.user.screen_name,
+            tweet: data.full_text.replace(/[\n\r]/g, ''),
+            id: data.id,
+            date: Date.now(),
+            class: classify,
+         },
+      ];
+      spinner.succeed(
+         `kowalski got tweet from ${document.username}` + '(´ ∀ ` *)'
+      );
+      return document;
+   } catch (error) {
+      ErrorHandler(error, spinner);
+   }
+};
+
 /**
  *
  * @param {*} count
@@ -53,7 +83,6 @@ const timeline = async (count) => {
          let text = tweet.text;
          return text;
       });
-
       return tweets;
    } catch (error) {
       ErrorHandler(error, spinner);
@@ -111,5 +140,6 @@ module.exports = {
    tweetsFrom,
    timeline,
    search,
+   tweet,
    app,
 };

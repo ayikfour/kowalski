@@ -3,7 +3,7 @@ const kowalski = require('./kowalski');
 const error = require('./utils/error');
 const auth = require('./utils/auth');
 const oa = require('./utils/oauth');
-const trainer = require('./textmining/trainer');
+const sentiment = require('./sentiment');
 
 var args = minimist(process.argv.slice(2), {
    alias: {
@@ -21,10 +21,14 @@ var args = minimist(process.argv.slice(2), {
 // let cmd =
 // args._[0] || 'angry' || 'sad' || 'confused' || 'happy' || 'neutral';
 
-const classify = ['angry', 'sad', 'confused', 'happy', 'neutral'];
+const classify = ['negative', 'sad', 'confused', 'positive', 'neutral'];
 
 module.exports = () => {
-   let cmd = classify.includes(args._[0]) ? 'train' : 'help';
+   let cmd = args._[0] || 'help';
+
+   if (classify.includes(args._[0])) {
+      cmd = 'train';
+   }
 
    if (args.version || args.v) {
       cmd = 'version';
@@ -70,7 +74,7 @@ module.exports = () => {
       case 'train':
          const url = args._[1];
          const classify = args._[0];
-         trainer.collect(url, classify);
+         sentiment.train(url, classify);
          break;
 
       case 'oauth':

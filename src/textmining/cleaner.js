@@ -20,10 +20,7 @@ function clean(document = '') {
          /(\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])/g,
          ''
       ) // remove emoji
-      .replace(
-         /(?<=^|(?<=[^a-zA-Z0-9-_\.]))@([A-Za-z]+[A-Za-z0-9-_]+\S\s)/g,
-         ''
-      ) // usernames
+      .replace(/(^|[^@\w])@(\w{1,15})\b/g, '') // usernames
       .replace(/[^\w\s]/g, ' ') //remove period
       .replace(/[,'":*?%<>{|}&\/\\$()\n\r]/g, '') //remove symbols
       .replace(/\B\s\B/g, ''); //remove whitespace

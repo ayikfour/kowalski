@@ -1,19 +1,17 @@
 const fs = require('fs');
-const csv = require('csv-parser');
+const csv = require('csvtojson');
 const createCsvWriter = require('csv-writer').createObjectCsvWriter;
+const util = require('util');
+const path = require('path');
 
 function writeTo(filename, documents) {
-   fs.writeFileSync(
-      `./output/${filename}.txt`,
-      stringify(documents),
-      { flags: 'W+' },
-      (err) => {
-         if (err) {
-            return console.log(err);
-         }
-         console.log('The file was saved!');
+   const filePath = path.join(__dirname, `../output/${filename}.txt`);
+   fs.writeFileSync(filePath, stringify(documents), { flags: 'W+' }, (err) => {
+      if (err) {
+         return console.log(err);
       }
-   );
+      console.log('The file was saved!');
+   });
 }
 
 async function writeCSV(path, header, data) {
@@ -37,49 +35,29 @@ function readFrom(filepath = '') {
    }
 }
 
-function readBulk(dir = '', fileslist) {
+async function readBulk(dir = '') {
    try {
-      files = fs.readdirSync(dir, { encoding: 'utf-8' });
-      fileslist = fileslist || [];
-      files.forEach((file) => {
-         let isDirectory = fs.statSync(dir + file).isDirectory();
-         if (isDirectory) {
-            fileslist = readBulk(dir + file + '/', fileslist);
-         } else {
-            fileslist.push(readTXT(dir + file));
-         }
-      });
-      return fileslist;
+      const readDir = util.promisify(fs.readdir);
+      // let files = fs.readdirSync(dir, { encoding: 'utf-8' });
+      let files = await readDir(dir, { encoding: 'utf-8' });
+      let fileslist = [];
+      for (let file of files) {
+         const result = await readCSV(dir + file);
+         fileslist.push(result);
+      }
+      return fileslist.flat();
    } catch (error) {
       console.log(error);
    }
 }
 
-function readCSV(filepath) {
-   let source = [];
+async function readCSV(filepath) {
    try {
-      fs.createReadStream(filepath)
-         .pipe(csv())
-         .on('data', (row) => {
-            source.push(row);
-         })
-         .on('end', () => {
-            console.log('import success');
-            console.log(source);
-            return source;
-         });
+      const array = await csv().fromFile(filepath);
+      // console.log(array);
+      return array;
    } catch (error) {
       console.log(err);
-      return null;
-   }
-}
-
-function readTXT(filepath = '') {
-   try {
-      let file = fs.readFileSync(filepath, 'utf8');
-      return file;
-   } catch (error) {
-      console.log(err.message);
       return null;
    }
 }
