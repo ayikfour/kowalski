@@ -52,10 +52,11 @@ function tokenize(document = '') {
  * an array of token
  */
 function filter(document = [], keyword = '') {
+   let keywords = keyword.split(' ');
    let filePath = path.resolve(__dirname, '../stopwords.txt');
    let stopwords = fs.readFileSync(filePath, 'utf8').split('\n');
    let filtered = document.filter(
-      (word) => !stopwords.includes(word) && word !== keyword.toLowerCase()
+      (word) => !stopwords.includes(word) && !keywords.includes(word)
    );
    return filtered;
 }
